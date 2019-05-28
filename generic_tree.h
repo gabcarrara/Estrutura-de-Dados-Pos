@@ -4,8 +4,10 @@
 typedef struct arvore {
     int cod;
     struct info * no;
-    //Filho da esquerda e filho da direita.
-    struct arvore * filho, irmao;
+    //Filho da esquerda
+    struct arvore *filho; 
+    //Filho da direita
+    struct arvore *irmao;
 }TAG;
 
 typedef struct info{
@@ -20,8 +22,8 @@ TAG* insere(TAG* arvore, TAG* pai, TI* info)
 
 TAG* inicializa()
 
-TAG* remove(TAG* arvore, int id)
+TAG* remove(TAG* arvore, int cod, TAG* novo_pai)
 
-TAG* busca(TAG* arvore, int id)
+TAG* busca(TAG* arvore, int cod)
 
 #endif
