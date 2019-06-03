@@ -8,7 +8,7 @@ typedef struct arvore {
     int pai;
     struct info *no;
     //Filho da esquerda
-    struct arvore *filho; 
+    struct arvore *filho;
     //Filho da direita
     struct arvore *irmao;
 }TAG;
@@ -81,5 +81,6 @@ TAG* busca(TAG* arvore, int cod){
     reutrn busca(arvore->filho);
 }
 
+//This is destroy. :)
 void libera(TAG* arvore)
 #endif
