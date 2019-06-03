@@ -7,7 +7,7 @@ typedef struct arvore {
     int cod;
     struct info * no;
     //Filho da esquerda
-    struct arvore *filho; 
+    struct arvore *filho;
     //Filho da direita
     struct arvore *irmao;
 }TAG;
@@ -31,5 +31,6 @@ TAG* remove(TAG* arvore, int cod, int cod_novo_pai)
 
 TAG* busca(TAG* arvore, int cod)
 
+//This is destroy. :)
 void libera(TAG* arvore)
 #endif
