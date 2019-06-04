@@ -1,7 +1,7 @@
 #ifndef _generic_tree_h
 #define _generic_tree_h
 
-include "poligono.h"
+#include "poligono.h"
 
 typedef struct arvore {
     int cod;
@@ -19,11 +19,24 @@ typedef struct info{
     float area;
 }TI;
 
-void imprime(TAG *arvore){
-    
-    
-}    
+void imprime(TAG *arvore)
 
+void imprime_no(TAG *arvore, int cod){
+    if(!arvore){
+        printf("Arvore nula!");
+        return;
+    }    
+    TAG *no = busca(arvore, cod);
+    if(!no){
+        printf("Nó não encontrado!");
+        return;
+    }
+    printf("Codigo unico: %d", no->cod);
+    printf("Pai: %d", no->pai);
+    printf("Tipo do poligono: %d", no->no->tipo);
+    imprime_poligono(no->no->dados, no->no->tipo);
+    printf("Area do poligono: %f", no->no->area );
+}
 //TO-DO: Recebe struct do poligono e usar poligono_id para calcular a area correta.
 TAG* insere(TAG* arvore, int cod, int pai, void *poligono, enum_poli nome){
     
@@ -82,5 +95,14 @@ TAG* busca(TAG* arvore, int cod){
 }
 
 //This is destroy. :)
-void libera(TAG* arvore)
+void libera(TAG* arvore){
+    
+    if(arvore){
+        libera(arvore->irmao);
+        libera(arvore->filho);
+        free(arvore->info->dados);
+        free(arvore->info);
+        free->(arvore);
+    }
+}    
 #endif
