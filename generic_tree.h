@@ -43,11 +43,11 @@ void imprime_no(TAG *arvore, int cod){
     printf("Codigo unico: %d", no->cod);
     printf("Pai: %d", no->pai);
     printf("Tipo do poligono: %d", no->no->tipo);
-    imprime_poligono(no->no->dados, no->no->tipo);
+    //imprime_poligono(no->no->dados, no->no->tipo);
     printf("Area do poligono: %f", no->no->area );
 }
 //TO-DO: Recebe struct do poligono e usar poligono_id para calcular a area correta.
-TAG* insere(TAG* arvore, int cod, int pai, void *poligono, enum_poli nome){
+TAG* insere(TAG* arvore, int cod, int pai, void *poligono, enum poligono nome){
     
     if(pai == 0 && arvore!= NULL){
         printf("Não é possível inserir uma nova raiz!");
@@ -64,7 +64,7 @@ TAG* insere(TAG* arvore, int cod, int pai, void *poligono, enum_poli nome){
     novo->cod = cod;
     novo->pai = pai;
     novo->no = (TI*)malloc(sizeof(TI));
-    novo->no->tipo = poligono_id;
+    novo->no->tipo = nome;
     novo->no->dados = poligono;
     novo->no->area = calcula_area(poligono, nome);
     novo->filho = NULL;
