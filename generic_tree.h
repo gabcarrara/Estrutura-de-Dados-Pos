@@ -1,6 +1,7 @@
 #ifndef _generic_tree_h
 #define _generic_tree_h
 
+#include <stdlib.h>
 #include "poligono.h"
 
 typedef struct arvore {
@@ -19,7 +20,15 @@ typedef struct info{
     float area;
 }TI;
 
-void imprime(TAG *arvore)
+//Busco um no da arvore pelo seu codigo unico
+TAG* busca(TAG* arvore, int cod){
+    if(!arvore || arvore->cod == cod) return arvore;
+    TAG *irmao = busca(arvore->irmao, cod);
+    if(irmao) return irmao;
+    return busca(arvore->filho, cod);
+}
+
+void imprime(TAG *arvore);
 
 void imprime_no(TAG *arvore, int cod){
     if(!arvore){
@@ -48,7 +57,7 @@ TAG* insere(TAG* arvore, int cod, int pai, void *poligono, enum_poli nome){
     TAG *pai_aux =  busca(arvore, pai);
     if(!pai_aux){
         printf("Pai não encontrado");
-        reutrn arvore;
+        return arvore;
     }
     
     TAG *novo = (TAG*)malloc(sizeof(TAG));
@@ -83,16 +92,10 @@ TAG* inicializa(){
     return NULL;
 }
 
-TAG* remove(TAG* arvore, int cod, int cod_novo_pai)
+TAG* remove_no(TAG* arvore, int cod, int cod_novo_pai);
 
 
-//Busco um no da arvore pelo seu codigo unico
-TAG* busca(TAG* arvore, int cod){
-    if(!arvore || arvore->cod == cod) return arvore;
-    TAG *irmao = busca(arvore->irmao, cod);
-    if(irmao) return irmao;
-    reutrn busca(arvore->filho);
-}
+
 
 //This is destroy. :)
 void libera(TAG* arvore){
@@ -100,9 +103,9 @@ void libera(TAG* arvore){
     if(arvore){
         libera(arvore->irmao);
         libera(arvore->filho);
-        free(arvore->info->dados);
-        free(arvore->info);
-        free->(arvore);
+        free(arvore->no->dados);
+        free(arvore->no);
+        free(arvore);
     }
 }    
 #endif
