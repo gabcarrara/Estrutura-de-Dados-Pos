@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "poligono.h"
 
 //TO-DO: Modificar a entrada de arquivo, passando pelo terminal.
 //TO-DO: Tratar a ultima linha da leitura de arquivo.
@@ -20,9 +21,12 @@ int main(void){
         //printf("%d %d %s %d %d", a,b,c,d,e);
         int cod = atoi(strtok(str, "/"));
         int cod_par = atoi(strtok(NULL, "/"));
-        char* nome_geo = strtok(NULL, " ");
+        char* nome_poli = strtok(NULL, " ");
         char* medidas = strtok(NULL, "");
-        printf("%d %d %s %s\n", cod, cod_par, nome_geo, medidas);
+        printf("%d %d %s %s\n", cod, cod_par, nome_poli, medidas);
+
+        enum poligono cod_poli = string_to_enum(nome_poli);
+        printf("%d", cod_poli);
 
     }
 
