@@ -46,7 +46,7 @@ void imprime_no(TAG *arvore, int cod){
     //imprime_poligono(no->no->dados, no->no->tipo);
     printf("Area do poligono: %f", no->no->area );
 }
-//TO-DO: Recebe struct do poligono e usar poligono_id para calcular a area correta.
+//Recebe struct do poligono e usar poligono_id para calcular a area correta.
 TAG* insere(TAG* arvore, int cod, int pai, void *poligono, enum poligono nome){
     
     if(pai == 0 && arvore!= NULL){
