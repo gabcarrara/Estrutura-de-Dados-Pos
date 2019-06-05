@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "poligono.h"
+#include "generic_tree.h"
 
 //TO-DO: Modificar a entrada de arquivo, passando pelo terminal.
 //TO-DO: Tratar a ultima linha da leitura de arquivo.
@@ -11,6 +12,10 @@ int main(void){
     char c[4], ch;
     char str[13];
     int str_size = 30;
+    int values[3];
+
+    TAG* arvore = (TAG*)malloc(sizeof(TAG));
+    arvore = inicializa();
 
     if(!file){
         printf("Error: arquivo não encontrado!\n");
@@ -20,13 +25,28 @@ int main(void){
         //sscanf(str, "%d/%d/%s %d %d", &a,&b,c,&d,&e);
         //printf("%d %d %s %d %d", a,b,c,d,e);
         int cod = atoi(strtok(str, "/"));
-        int cod_par = atoi(strtok(NULL, "/"));
+        int cod_pai = atoi(strtok(NULL, "/"));
         char* nome_poli = strtok(NULL, " ");
-        char* medidas = strtok(NULL, "");
-        printf("%d %d %s %s\n", cod, cod_par, nome_poli, medidas);
+
+        char* medida = strtok(NULL, " ");
+        int i=0;
+        while(medida != NULL){
+            //values[i] = (int) medida;
+            i++;
+        }
+
+
+
+        printf("%d %d %s %s\n", cod, cod_pai, nome_poli, medida);
 
         enum poligono cod_poli = string_to_enum(nome_poli);
-        printf("%d", cod_poli);
+        printf("%d\n", cod_poli);
+        //void * poli = cria(cod_poli, values);
+
+        //TAG* insere(arvore, cod, cod_pai, poli, cod_poli);
+
+
+
 
     }
 
