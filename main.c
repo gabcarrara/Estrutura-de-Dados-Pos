@@ -22,7 +22,7 @@ int main(void){
 
     int cod, cod_pai;
     char* nome_poli;
-    int values[3];
+    int *values = (int*)malloc(sizeof(int)*3);
     while(getline(&line, &str_size, file) != -1){
         sscanf(line, "%d/%d/%s %d %d %d", &cod, &cod_pai, nome_poli, &values[0], &values[1], &values[2]);
 
