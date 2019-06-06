@@ -49,13 +49,13 @@ void imprime_no(TAG *arvore, int cod){
 //Recebe struct do poligono e usar poligono_id para calcular a area correta.
 TAG* insere(TAG* arvore, int cod, int pai, void *poligono, enum poligono nome){
 
-    if(pai == 0 && arvore!= NULL){
+    if(pai == 0 && arvore){
         printf("Não é possível inserir uma nova raiz!\n");
         return arvore;
     }
-
+    
     TAG *pai_aux =  busca(arvore, pai);
-    if(!pai_aux){
+    if(!pai_aux && arvore){
         printf("Pai não encontrado.\n");
         return arvore;
     }
@@ -71,8 +71,7 @@ TAG* insere(TAG* arvore, int cod, int pai, void *poligono, enum poligono nome){
     //insere como ultimo irmao
     novo->irmao = NULL;
 
-    if(pai == 0 ) return novo;
-
+    if(pai == 0) return novo;
 
     TAG *irmaos = pai_aux->filho;
 
@@ -84,7 +83,6 @@ TAG* insere(TAG* arvore, int cod, int pai, void *poligono, enum poligono nome){
     while(irmaos->irmao) irmaos = irmaos->irmao;
     irmaos->irmao = novo;
 
-    printf("Nó inserido com sucesso!");
     return arvore;
 }
 
