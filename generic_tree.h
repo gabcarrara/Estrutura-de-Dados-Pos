@@ -32,12 +32,12 @@ void imprime(TAG *arvore);
 
 void imprime_no(TAG *arvore, int cod){
     if(!arvore){
-        printf("Arvore nula!");
+        printf("Arvore nula!\n");
         return;
     }
     TAG *no = busca(arvore, cod);
     if(!no){
-        printf("Nó não encontrado!");
+        printf("Nó não encontrado!\n");
         return;
     }
     printf("Codigo unico: %d", no->cod);
