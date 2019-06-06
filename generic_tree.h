@@ -32,12 +32,12 @@ void imprime(TAG *arvore);
 
 void imprime_no(TAG *arvore, int cod){
     if(!arvore){
-        printf("Arvore nula!");
+        printf("Arvore nula!\n");
         return;
     }
     TAG *no = busca(arvore, cod);
     if(!no){
-        printf("Nó não encontrado!");
+        printf("Nó não encontrado!\n");
         return;
     }
     printf("Codigo unico: %d", no->cod);
@@ -84,7 +84,7 @@ TAG* insere(TAG* arvore, int cod, int pai, void *poligono, enum poligono nome){
     while(irmaos->irmao) irmaos = irmaos->irmao;
     irmaos->irmao = novo;
 
-    printf("Nó inserido com sucesso!");
+    printf("Nó inserido com sucesso!\n");
     return arvore;
 }
 
