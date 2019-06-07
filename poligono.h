@@ -124,6 +124,4 @@ void imprime_poligono(void* poligono, enum_poli nome){
     }
 }
 
-//TO-DO: Atualiza as dimencoes do poligono.
-
 #endif
