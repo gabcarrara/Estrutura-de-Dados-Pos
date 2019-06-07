@@ -5,12 +5,26 @@
 #include "generic_tree.h"
 #include "avl.h"
 
+void help(){
+    printf("\n");
+    printf("################# COMMAND LIST ###############\n");
+    printf("#\tinsert cod_no cod_pai cod_poli x y z #\n");
+    printf("#\tremove cod_no novo_pai               #\n");
+    printf("#\tdestroy                              #\n");
+    printf("#\tprint_no cod_no                      #\n");
+    printf("#\tprint                                #\n");
+    printf("#\texit                                 #\n");
+    printf("#\thelp                                 #\n");
+    printf("##############################################");
+    printf("\n\n");
+}
+
 //TO-DO: Modificar a entrada de arquivo, passando pelo terminal.
 int main(void){
     FILE  * file = fopen("dataset.txt", "r");
-
     TAG *arvore = inicializa();
     //NO *avl = NULL;
+
 
     if(!file){
         printf("Error: arquivo não encontrado!\n");
@@ -53,10 +67,10 @@ int main(void){
     int exit = 0;
     char codline[30], dados[30];
     char* decode, *action;
+    help();
     while(!exit){
         printf("/>");
         scanf("%s", codline);
-        printf("codline: %s\n", codline);
 
         if(!strcmp(codline, "insert")){
             //insert 15 10 TRI 1 1
@@ -88,8 +102,8 @@ int main(void){
 
         }else if(!strcmp(codline, "print_no")){
             scanf("%[^\n\r]", dados);
-            int no = atoi(dados);
-            imprime_no(arvore, no);
+            int cod_no = atoi(dados);
+            imprime_no(arvore, cod_no);
 
         }else if(!strcmp(codline, "print")){
             imprime(arvore);
@@ -99,16 +113,7 @@ int main(void){
         }else if(!strcmp(codline, "exit")){
             exit = 1;
         }else if(!strcmp(codline, "help")){
-            printf("\n");
-            printf("################# Command List ###############\n");
-            printf("#\tinsert cod_no cod_pai cod_poli x y z #\n");
-            printf("#\tremove cod_no novo_pai               #\n");
-            printf("#\tdestroy                              #\n");
-            printf("#\tprint_no cod_no                      #\n");
-            printf("#\tprint                                #\n");
-            printf("#\texit                                 #\n");
-            printf("##############################################");
-            printf("\n\n");
+            help();
         }else{
             printf("Comando nao encontrado!");
         }
