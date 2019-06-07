@@ -5,7 +5,7 @@
 #include "generic_tree.h"
 
 //TO-DO: Modificar a entrada de arquivo, passando pelo terminal.
-int main(void){
+int main(void){    
     FILE  * file = fopen("dataset.txt", "r");
 
     TAG* arvore = (TAG*)malloc(sizeof(TAG));
@@ -55,7 +55,7 @@ int main(void){
     //imprime no
     //imprime Arvore
     int exit = 0;
-    char* codline;
+    char codline[30];
     char* decode, *action;
     while(!exit){
         printf("\n");
