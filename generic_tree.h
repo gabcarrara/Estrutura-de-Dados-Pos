@@ -109,19 +109,19 @@ void realoca_filhos(TAG *pai_antigo, TAG *pai_novo){
 TAG* remove_no(TAG* arvore, int cod, int cod_novo_pai){
     //Verifica se a arvore existe
     if(!arvore){
-        printf("Arvore invalida");
+        printf("Arvore invalida\n");
         return arvore;
     }
     //Verifica se o novo pai existe
     TAG *novo_pai_temp = busca(arvore, cod_novo_pai);
     if(!novo_pai_temp){
-        printf("Novo pai invalido");
+        printf("Novo pai invalido\n");
         return arvore;
     }
     //verifica se o no a ser removido existe
     TAG *temp = busca(arvore, cod);
     if(!temp || temp->pai==0){
-        printf("No invalido");
+        printf("No invalido\n");
         return arvore;
     }
     //Busca o pai do no a ser removido
