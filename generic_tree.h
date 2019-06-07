@@ -90,7 +90,75 @@ TAG* inicializa(){
     return NULL;
 }
 
-TAG* remove_no(TAG* arvore, int cod, int cod_novo_pai);
+void realoca_filhos(TAG *pai_antigo, TAG *pai_novo){
+        
+    TAG *irmao_temp = pai_antigo->filho;
+    while(irmao_temp){
+        irmao_temp->pai=pai_novo->cod;
+        irmao_temp = irmao_temp->irmao;
+    }
+    irmao_temp = pai_antigo->filho;
+    
+    if(!pai_novo->filho){
+        pai_novo->filho=irmao_temp;
+        return;
+    }
+    TAG *irmao_novo = pai_novo->filho;
+    while(irmao_novo->irmao) irmao_novo=irmao_novo->irmao;
+    irmao_novo->irmao = irmao_temp;
+    return;
+    
+}
+TAG* remove_no(TAG* arvore, int cod, int cod_novo_pai){
+    //Verifica se a arvore existe
+    if(!arvore){
+        printf("Arvore invalida");
+        return arvore;
+    }
+    //Verifica se o novo pai existe
+    TAG *novo_pai_temp = busca(arvore, cod_novo_pai);
+    if(!novo_pai_temp){
+        printf("Novo pai invalido");
+        return arvore;
+    }
+    //verifica se o no a ser removido existe
+    TAG *temp = busca(arvore, cod);
+    if(!temp || temp->pai==0){
+        printf("No invalido");
+        return arvore;
+    }
+    //Busca o pai do no a ser removido
+    TAG *pai_temp = busca(arvore, temp->pai);
+    //Pega o irmao do no a ser removido
+    TAG *irmao_temp = pai_temp->filho;
+    
+    //Caso o no seja o primeiro filho
+    if(irmao_temp == temp){
+        realoca_filhos(temp, novo_pai_temp);        
+        pai_temp->filho = irmao_temp->irmao;
+        imprime_no(temp, temp->cod);
+        free(temp->no->dados);
+        free(temp->no);
+        free(temp);
+        return arvore;
+    }
+    //Caso o no estaja no meio ou no fim da lista de irmaos
+    TAG *irmao_ant = irmao_temp;
+    irmao_temp = irmao_temp->irmao;
+    
+    while(irmao_temp->irmao != temp){
+        irmao_ant = irmao_temp;
+        irmao_temp = irmao_temp->irmao;
+    }
+    realoca_filhos(temp, novo_pai_temp);
+    irmao_ant->irmao = temp->irmao;    
+    imprime_no(temp, temp->cod);
+    free(temp->no->dados);
+    free(temp->no);
+    free(temp);
+    return arvore;
+    
+}
 
 //This is destroy. :)
 void libera(TAG* arvore){
