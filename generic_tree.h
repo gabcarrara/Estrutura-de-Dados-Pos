@@ -44,9 +44,10 @@ void imprime_aux(TAG *arvore, int nivel){
 
 void imprime(TAG *arvore){
     if(arvore){
+        printf("\n############## GENERIC TREE ##############\n");
         imprime_aux(arvore, 0);
+        printf("\n##########################################\n\n");
     }
-    printf("\n");
 }
 
 void imprime_no(TAG *arvore, int cod){
@@ -197,6 +198,11 @@ TAG* libera(TAG* arvore){
 }
 
 //TO-DO: Atualizar pai.
+
+void atualiza_poligono(TAG *arvore, int cod, int* values){
+
+
+}
 
 
 #endif
