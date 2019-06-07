@@ -210,8 +210,16 @@ TAG* libera(TAG* arvore){
 //TO-DO: Atualizar pai.
 
 void atualiza_poligono(TAG *arvore, int cod, int* values){
+    TAG * no = busca(arvore, cod);
+    if(!no){
+        printf("No nao existe!\n");
+        return;
+    }
+    free(no->no);
 
-
+    no->no->dados = cria(cod, values);
+    no->no->tipo = cod;
+    no->no->area = calcula_area(no->no->dados, no->no->tipo);
 }
 
 

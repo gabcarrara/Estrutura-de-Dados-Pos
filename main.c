@@ -5,10 +5,11 @@
 #include "generic_tree.h"
 #include "avl.h"
 
-void help(){
+void help(void){
     printf("\n");
     printf("################# COMMAND LIST ###############\n");
     printf("#\tinsert cod_no cod_pai cod_poli x y z #\n");
+    printf("#\tupdate_polygon cod_no cod_poli x y z #\n");
     printf("#\tremove cod_no novo_pai               #\n");
     printf("#\tdestroy                              #\n");
     printf("#\tprint_no cod_no                      #\n");
@@ -91,6 +92,24 @@ int main(void){
             enum poligono cod_poli = string_to_enum(nome_poli);
             void * poli = cria(cod_poli, values);
             arvore = insere(arvore, cod, cod_pai, poli, cod_poli);
+
+        }else if(!strcmp(codline, "update_polygon")){
+            //update_polygon 1 CIR 10
+            scanf("%d", &cod);
+            scanf("%s", nome_poli);
+            scanf("%[^\n\r]", dados);
+
+            medidas = strtok(dados, "");
+            int i=0;
+            while(medidas!=NULL){
+                val = strtok(medidas, " ");
+                values[i] = atoi(val);
+                medidas = strtok(NULL, "");
+                i++;
+            }
+
+            enum poligono cod_poli = string_to_enum(nome_poli);
+            atualiza_poligono(arvore, cod_poli, values);
 
         }else if(!strcmp(codline, "remove")){
             scanf("%d", &cod);
