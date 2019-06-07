@@ -6,12 +6,11 @@
 #include "avl.h"
 
 //TO-DO: Modificar a entrada de arquivo, passando pelo terminal.
-int main(void){    
+int main(void){
     FILE  * file = fopen("dataset.txt", "r");
-    TAG* arvore = (TAG*)malloc(sizeof(TAG));
-    arvore = inicializa();
-    NO *avl = NULL;
 
+    TAG *arvore = inicializa();
+    //NO *avl = NULL;
 
     if(!file){
         printf("Error: arquivo não encontrado!\n");
@@ -22,7 +21,7 @@ int main(void){
     size_t str_size = 0;
 
     int cod, cod_pai;
-    char* nome_poli, * medidas;
+    char* nome_poli, *medidas;
     int *values = (int*)malloc(sizeof(int)*3);
     char * val;
     while(getline(&line, &str_size, file) != -1){
@@ -51,58 +50,45 @@ int main(void){
     }
     //printf("COD|COD_PAI|POLIGONO [MEDIDAS] AREA\n");
 
-    //insere no
-    //remove no
-    //destroy Arvore
-    //imprime no
-    //imprime Arvore
     int exit = 0;
-    char codline[30];
+    char codline[30], dados[30];
     char* decode, *action;
     while(!exit){
-        printf("\n");
-        printf("insert cod_no cod_pai cod_poli x y z\n");
-        printf("remove cod_no novo_pai\n");
-        printf("destroy\n");
-        printf("print_no cod_no\n");
-        printf("print\n");
-        printf("exit\n");
-        printf("\n");
-
+        printf("/>");
         scanf("%s", codline);
         printf("codline: %s\n", codline);
 
         if(!strcmp(codline, "insert")){
+            //insert 15 10 TRI 1 1
             scanf("%d", &cod);
             scanf("%d", &cod_pai);
             scanf("%s", nome_poli);
-            scanf("%d %d %d", &values[0], &values[1], &values[2]);
+            scanf("%[^\n\r]", dados);
 
-            /*for(int i=0; i<3; i++){
-                values[i] = 0;
-            }
+            medidas = strtok(dados, "");
             int i=0;
             while(medidas!=NULL){
                 val = strtok(medidas, " ");
                 values[i] = atoi(val);
                 medidas = strtok(NULL, "");
                 i++;
-            }*/
+            }
 
             enum poligono cod_poli = string_to_enum(nome_poli);
             void * poli = cria(cod_poli, values);
             arvore = insere(arvore, cod, cod_pai, poli, cod_poli);
 
         }else if(!strcmp(codline, "remove")){
-            exit = 1;
+            scanf("%d", &cod);
+            scanf("%d", &cod_pai);
+            arvore = remove_no(arvore, cod, cod_pai);
 
         }else if(!strcmp(codline, "destroy")){
-            libera(arvore);
+            arvore = libera(arvore);
 
         }else if(!strcmp(codline, "print_no")){
-            int no = -1;
-            scanf("%d", &no);
-            printf("no: %d\n", no);
+            scanf("%[^\n\r]", dados);
+            int no = atoi(dados);
             imprime_no(arvore, no);
 
         }else if(!strcmp(codline, "print")){
@@ -112,12 +98,21 @@ int main(void){
 
         }else if(!strcmp(codline, "exit")){
             exit = 1;
+        }else if(!strcmp(codline, "help")){
+            printf("\n");
+            printf("################# Command List ###############\n");
+            printf("#\tinsert cod_no cod_pai cod_poli x y z #\n");
+            printf("#\tremove cod_no novo_pai               #\n");
+            printf("#\tdestroy                              #\n");
+            printf("#\tprint_no cod_no                      #\n");
+            printf("#\tprint                                #\n");
+            printf("#\texit                                 #\n");
+            printf("##############################################");
+            printf("\n\n");
         }else{
             printf("Comando nao encontrado!");
         }
     }
-
-    imprime(arvore);
 
     arvore = libera(arvore);
 

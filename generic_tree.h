@@ -194,4 +194,8 @@ TAG* libera(TAG* arvore){
     }
     return NULL;
 }
+
+//TO-DO: Atualizar pai.
+
+
 #endif
