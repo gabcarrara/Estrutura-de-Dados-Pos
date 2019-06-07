@@ -1,6 +1,5 @@
 #ifndef _generic_tree_h
 #define _generic_tree_h
-
 #include <stdlib.h>
 #include "poligono.h"
 
