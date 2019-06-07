@@ -33,7 +33,7 @@ void imprime_aux(TAG *arvore, int nivel){
             printf("\t");
             imprime_aux(arvore->irmao, nivel+1);
         }
-        
+
         if(arvore->filho){
             printf("\n");
             for(int i=0 ; i< nivel; i++) printf("\t");
@@ -54,6 +54,12 @@ void imprime_no(TAG *arvore, int cod){
         printf("Arvore nula!\n");
         return;
     }
+    if(cod==-1){
+        printf("No invalido!\n");
+        return;
+    }
+
+
     TAG *no = busca(arvore, cod);
     if(!no){
         printf("Nó não encontrado!\n");
@@ -109,14 +115,14 @@ TAG* inicializa(){
 }
 
 void realoca_filhos(TAG *pai_antigo, TAG *pai_novo){
-        
+
     TAG *irmao_temp = pai_antigo->filho;
     while(irmao_temp){
         irmao_temp->pai=pai_novo->cod;
         irmao_temp = irmao_temp->irmao;
     }
     irmao_temp = pai_antigo->filho;
-    
+
     if(!pai_novo->filho){
         pai_novo->filho=irmao_temp;
         return;
@@ -125,7 +131,7 @@ void realoca_filhos(TAG *pai_antigo, TAG *pai_novo){
     while(irmao_novo->irmao) irmao_novo=irmao_novo->irmao;
     irmao_novo->irmao = irmao_temp;
     return;
-    
+
 }
 TAG* remove_no(TAG* arvore, int cod, int cod_novo_pai){
     //Verifica se a arvore existe
@@ -149,10 +155,10 @@ TAG* remove_no(TAG* arvore, int cod, int cod_novo_pai){
     TAG *pai_temp = busca(arvore, temp->pai);
     //Pega o irmao do no a ser removido
     TAG *irmao_temp = pai_temp->filho;
-    
+
     //Caso o no seja o primeiro filho
     if(irmao_temp == temp){
-        realoca_filhos(temp, novo_pai_temp);        
+        realoca_filhos(temp, novo_pai_temp);
         pai_temp->filho = irmao_temp->irmao;
         imprime_no(temp, temp->cod);
         free(temp->no->dados);
@@ -163,19 +169,19 @@ TAG* remove_no(TAG* arvore, int cod, int cod_novo_pai){
     //Caso o no estaja no meio ou no fim da lista de irmaos
     TAG *irmao_ant = irmao_temp;
     irmao_temp = irmao_temp->irmao;
-    
+
     while(irmao_temp->irmao != temp){
         irmao_ant = irmao_temp;
         irmao_temp = irmao_temp->irmao;
     }
     realoca_filhos(temp, novo_pai_temp);
-    irmao_ant->irmao = temp->irmao;    
+    irmao_ant->irmao = temp->irmao;
     imprime_no(temp, temp->cod);
     free(temp->no->dados);
     free(temp->no);
     free(temp);
     return arvore;
-    
+
 }
 
 //This is destroy. :)
