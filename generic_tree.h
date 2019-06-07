@@ -8,10 +8,8 @@ typedef struct arvore {
     int cod;
     int pai;
     struct info *no;
-    //Filho da esquerda
-    struct arvore *filho;
-    //Filho da direita
-    struct arvore *irmao;
+    struct arvore *filho; //Filho da esquerda
+    struct arvore *irmao; //Filho da direita
 }TAG;
 
 typedef struct info{
@@ -40,20 +38,21 @@ void imprime_no(TAG *arvore, int cod){
         printf("Nó não encontrado!\n");
         return;
     }
-    printf("Codigo unico: %d", no->cod);
-    printf("Pai: %d", no->pai);
-    printf("Tipo do poligono: %d", no->no->tipo);
-    //imprime_poligono(no->no->dados, no->no->tipo);
-    printf("Area do poligono: %f", no->no->area );
+    printf("%d|", no->cod);
+    printf("%d|", no->pai);
+    imprime_poligono(no->no->dados, no->no->tipo);
+    printf(" %f", no->no->area);
+    printf("\n");
 }
+
+
 //Recebe struct do poligono e usar poligono_id para calcular a area correta.
 TAG* insere(TAG* arvore, int cod, int pai, void *poligono, enum poligono nome){
-
     if(pai == 0 && arvore){
         printf("Não é possível inserir uma nova raiz!\n");
         return arvore;
     }
-    
+
     TAG *pai_aux =  busca(arvore, pai);
     if(!pai_aux && arvore){
         printf("Pai não encontrado.\n");
@@ -68,13 +67,11 @@ TAG* insere(TAG* arvore, int cod, int pai, void *poligono, enum poligono nome){
     novo->no->dados = poligono;
     novo->no->area = calcula_area(poligono, nome);
     novo->filho = NULL;
-    //insere como ultimo irmao
-    novo->irmao = NULL;
+    novo->irmao = NULL; //insere como ultimo irmao.
 
     if(pai == 0) return novo;
 
     TAG *irmaos = pai_aux->filho;
-
     if(!irmaos){
         pai_aux->filho = novo;
         return arvore;
@@ -94,7 +91,6 @@ TAG* remove_no(TAG* arvore, int cod, int cod_novo_pai);
 
 //This is destroy. :)
 void libera(TAG* arvore){
-
     if(arvore){
         libera(arvore->irmao);
         libera(arvore->filho);

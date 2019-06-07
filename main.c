@@ -23,8 +23,8 @@ int main(void){
     int cod, cod_pai;
     char* nome_poli;
     int *values = (int*)malloc(sizeof(int)*3);
-    char* val;
-
+    char * val;
+    printf("COD|COD_PAI|POLIGONO [MEDIDAS] AREA\n");
     while(getline(&line, &str_size, file) != -1){
         //sscanf(line, "%d/%d/%s %d %d", &cod, &cod_pai, nome_poli, &values[0], &values[1]);
         //printf("%d %d %s %d %d\n", cod, cod_pai, nome_poli, values[0], values[1]);
@@ -33,13 +33,27 @@ int main(void){
 	    int cod_pai = atoi(strtok(NULL, "/"));
 	    char* nome_poli = strtok(NULL, " ");
         char* medidas = strtok(NULL, "");
-        printf("%d %d %s %s\n", cod, cod_pai, nome_poli, medidas);
+
+        for(int i=0; i<3; i++){
+            values[i] = 0;
+        }
+
+        int i=0;
+        while(medidas!=NULL){
+            val = strtok(medidas, " ");
+            values[i] = atoi(val);
+            medidas = strtok(NULL, "");
+            i++;
+        }
 
         enum poligono cod_poli = string_to_enum(nome_poli);
         void * poli = cria(cod_poli, values);
         arvore = insere(arvore, cod, cod_pai, poli, cod_poli);
 
+        imprime_no(arvore, cod);
     }
+
+    libera(arvore);
 
     if(line) free(line);
 

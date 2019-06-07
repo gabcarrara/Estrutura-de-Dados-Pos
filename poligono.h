@@ -84,7 +84,6 @@ void* cria(enum_poli nome, int* values){
     return NULL;
 }
 
-
 //Calcula area para um determinado poligono, se caso esse poligono nao existir, retorna -1.
 float calcula_area(void* poligono, enum_poli nome){
     if(nome==CIR){
@@ -104,6 +103,25 @@ float calcula_area(void* poligono, enum_poli nome){
         return ((tra->base_menor+tra->base_maior)*tra->altura)/2;
     }
     return -1;
+}
+
+void imprime_poligono(void* poligono, enum_poli nome){
+    if(nome==CIR){
+        TCIR* cir = poligono;
+        printf("CIR [ %f ]", cir->raio);
+    }else if(nome==QUA){
+        TQUA* qua = poligono;
+        printf("QUA [ %f ]", qua->lado);
+    }else if(nome==RET){
+        TRET* ret = poligono;
+        printf("RET [ %f %f ]", ret->base, ret->altura);
+    }else if(nome==TRI){
+        TTRI* tri = poligono;
+        printf("TRI [ %f %f ]", tri->base, tri->altura);
+    }else if(nome==TRA){
+        TTRA* tra = poligono;
+        printf("TRA [ %f %f %f ]", tra->base_menor, tra->base_maior, tra->altura);
+    }
 }
 
 #endif
