@@ -77,12 +77,20 @@ void imprime_no(TAG *arvore, int cod){
 TAG* insere(TAG* arvore, int cod, int pai, void *poligono, enum poligono nome){
     if(pai == 0 && arvore){
         printf("Não é possível inserir uma nova raiz!\n");
+        free(poligono);
         return arvore;
     }
 
     TAG *pai_aux =  busca(arvore, pai);
     if(!pai_aux && arvore){
         printf("Pai não encontrado.\n");
+        free(poligono);
+        return arvore;
+    }
+    
+    if(busca(arvore, cod)){
+        printf("No ja esta na arvore!\n");
+        free(poligono);
         return arvore;
     }
 
@@ -151,6 +159,11 @@ TAG* remove_no(TAG* arvore, int cod, int cod_novo_pai){
         printf("No invalido\n");
         return arvore;
     }
+    
+    if(busca(temp->filho, cod_novo_pai)){
+        printf("Novo pai nao pode ser descendente do no removido\n");
+        return arvore;
+    }
     //Busca o pai do no a ser removido
     TAG *pai_temp = busca(arvore, temp->pai);
     //Pega o irmao do no a ser removido
@@ -167,15 +180,13 @@ TAG* remove_no(TAG* arvore, int cod, int cod_novo_pai){
         return arvore;
     }
     //Caso o no estaja no meio ou no fim da lista de irmaos
-    TAG *irmao_ant = irmao_temp;
     irmao_temp = irmao_temp->irmao;
 
     while(irmao_temp->irmao != temp){
-        irmao_ant = irmao_temp;
         irmao_temp = irmao_temp->irmao;
     }
     realoca_filhos(temp, novo_pai_temp);
-    irmao_ant->irmao = temp->irmao;
+    irmao_temp->irmao = temp->irmao;
     imprime_no(temp, temp->cod);
     free(temp->no->dados);
     free(temp->no);

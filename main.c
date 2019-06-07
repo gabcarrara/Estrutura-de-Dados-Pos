@@ -59,7 +59,7 @@ int main(void){
         enum poligono cod_poli = string_to_enum(nome_poli);
         void * poli = cria(cod_poli, values);
         arvore = insere(arvore, cod, cod_pai, poli, cod_poli);
-        avl = insere_avl(cod, avl, busca(arvore, cod));
+        //avl = insere_avl(cod, avl, busca(arvore, cod));
         //imprime_no(arvore, cod);
     }
     //printf("COD|COD_PAI|POLIGONO [MEDIDAS] AREA\n");
@@ -108,7 +108,7 @@ int main(void){
         }else if(!strcmp(codline, "print")){
             imprime(arvore);
             printf("\nAVL\n");
-            imprime_avl(avl);
+            //imprime_avl(avl);
 
         }else if(!strcmp(codline, "exit")){
             exit = 1;
