@@ -54,72 +54,69 @@ int main(void){
     //destroy Arvore
     //imprime no
     //imprime Arvore
-
     int exit = 0;
     char* codline;
-    char* decode, action_codline;
+    char* decode, *action;
     while(!exit){
+        printf("\n");
         printf("insert cod_no cod_pai cod_poli x y z\n");
         printf("remove cod_no novo_pai\n");
         printf("destroy\n");
         printf("print_no cod_no\n");
         printf("print\n");
         printf("exit\n");
+        printf("\n");
 
         scanf("%s", codline);
-        codline = strtok(codline, "");
-        int i=0;
-        while(codline!=NULL){
-            codline = strtok(codline, " ");
-            printf("%s", codline);
+        printf("codline: %s\n", codline);
 
-            if(!strcmp(codline, "insert")){
-                cod = atoi(strtok(NULL, " "));
-                cod_pai = atoi(strtok(NULL, " "));
-                nome_poli = strtok(NULL, " ");
-                medidas = strtok(NULL, "");
+        if(!strcmp(codline, "insert")){
+            scanf("%d", &cod);
+            scanf("%d", &cod_pai);
+            scanf("%s", nome_poli);
+            scanf("%d %d %d", &values[0], &values[1], &values[2]);
 
-                for(int i=0; i<3; i++){
-                    values[i] = 0;
-                }
-
-                int i=0;
-                while(medidas!=NULL){
-                    val = strtok(medidas, " ");
-                    values[i] = atoi(val);
-                    medidas = strtok(NULL, "");
-                    i++;
-                }
-
-                enum poligono cod_poli = string_to_enum(nome_poli);
-                void * poli = cria(cod_poli, values);
-                arvore = insere(arvore, cod, cod_pai, poli, cod_poli);
-
-            }else if(!strcmp(codline, "remove")){
-                exit = 1;
-
-            }else if(!strcmp(codline, "destroy")){
-                libera(arvore);
-
-            }else if(!strcmp(codline, "print_no")){
-                int no = atoi(strtok(NULL, ""));
-                imprime_no(arvore, no);
-
-            }else if(!strcmp(codline, "print")){
-                imprime(arvore);
-
-            }else if(!strcmp(codline, "exit")){
-                exit = 1;
+            /*for(int i=0; i<3; i++){
+                values[i] = 0;
             }
+            int i=0;
+            while(medidas!=NULL){
+                val = strtok(medidas, " ");
+                values[i] = atoi(val);
+                medidas = strtok(NULL, "");
+                i++;
+            }*/
 
-            //codline = strtok(NULL, "");
+            enum poligono cod_poli = string_to_enum(nome_poli);
+            void * poli = cria(cod_poli, values);
+            arvore = insere(arvore, cod, cod_pai, poli, cod_poli);
+
+        }else if(!strcmp(codline, "remove")){
+            exit = 1;
+
+        }else if(!strcmp(codline, "destroy")){
+            libera(arvore);
+
+        }else if(!strcmp(codline, "print_no")){
+            int no = -1;
+            scanf("%d", &no);
+            printf("no: %d\n", no);
+            imprime_no(arvore, no);
+
+        }else if(!strcmp(codline, "print")){
+            imprime(arvore);
+
+        }else if(!strcmp(codline, "exit")){
+            exit = 1;
+        }else{
+            printf("Comando nao encontrado!");
         }
     }
-    
+
     imprime(arvore);
-    
+
     arvore = libera(arvore);
-    
+
     if(line) free(line);
 
 	fclose(file);
