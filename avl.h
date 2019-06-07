@@ -90,21 +90,24 @@ NO* insere_avl(int e, NO* t, TAG *elemento){
             t->esq = t->dir = NULL;
         }
     }
-    else if( e < t->info ){
+    else if(e < t->info){
         t->esq = insere_avl( e, t->esq, elemento );
-        if( calc_alt( t->esq ) - calc_alt( t->dir ) == 2 )
-            if( e < t->esq->info )
+        if(calc_alt(t->esq)-calc_alt(t->dir) == 2){
+            if( e < t->esq->info ){
                 t = rot_dir( t );
-            else
+            }else{
                 t = rot_esq_dir( t );
-    }
-    else if( e > t->info ){
+            }
+        }
+    }else if( e > t->info ){
         t->dir = insere_avl( e, t->dir, elemento);
-        if( calc_alt( t->dir ) - calc_alt( t->esq ) == 2 )
-            if( e > t->dir->info )
+        if( calc_alt( t->dir ) - calc_alt( t->esq ) == 2 ){
+            if( e > t->dir->info ){
                 t = rot_esq( t );
-            else
+            }else{
                 t = rot_dir_esq( t );
+            }
+        }
     }
     t->alt = max( calc_alt( t->esq ), calc_alt( t->dir ) ) + 1;
     return t;
@@ -150,27 +153,31 @@ void imprime_avl(NO *a){
 }
 
 
-NO * retira(int x, NO *T){       
+NO * retira(int x, NO *T){
     NO *p;
     if(T==NULL)
         return NULL;
     else
         if(x > T->info){
             T->dir=retira(x,T->dir);
-            if(FB(T)==2)
-                if(FB(T->esq)>=0)
+            if(FB(T)==2){
+                if(FB(T->esq)>=0){
                     T=rot_dir(T);
-                else
+                }else{
                     T=rot_esq_dir(T);
+                }
+            }
         }
         else
             if(x<T->info){
                     T->esq=retira(x,T->esq);
-                    if(FB(T)==-2)//Rebalance during windup
-                        if(FB(T->dir)<=0)
+                    if(FB(T)==-2){//Rebalance during windup
+                        if(FB(T->dir)<=0){
                             T=rot_esq(T);
-                        else
+                        }else{
                             T=rot_dir_esq(T);
+                        }
+                    }
             }
             else{
                 //info to be deleted is found
@@ -179,11 +186,13 @@ NO * retira(int x, NO *T){
                       while(p->dir != NULL) p=p->dir;
                       T->info=p->info;
                       T->esq=retira(p->info, T->esq);
-                      if(FB(T)== -2)//Rebalance during windup
-                        if(FB(T->dir)<=0)
+                      if(FB(T)== -2){//Rebalance during windup
+                        if(FB(T->dir)<=0){
                             T=rot_esq(T);
-                        else
+                        }else{
                             T=rot_dir_esq(T);
+                        }
+                    }
                   }
                   else{
                       NO *x = T;
