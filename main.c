@@ -115,9 +115,11 @@ int main(void){
             //codline = strtok(NULL, "");
         }
     }
-
-    libera(arvore);
-
+    
+    imprime(arvore);
+    
+    arvore = libera(arvore);
+    
     if(line) free(line);
 
 	fclose(file);
