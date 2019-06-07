@@ -26,7 +26,28 @@ TAG* busca(TAG* arvore, int cod){
     return busca(arvore->filho, cod);
 }
 
-void imprime(TAG *arvore);
+void imprime_aux(TAG *arvore, int nivel){
+    if(arvore){
+        printf("%d<-%d",arvore->pai, arvore->cod);
+        if(arvore->irmao){
+            printf("\t");
+            imprime_aux(arvore->irmao, nivel+1);
+        }
+        
+        if(arvore->filho){
+            printf("\n");
+            for(int i=0 ; i< nivel; i++) printf("\t");
+            imprime_aux(arvore->filho, nivel);
+        }
+    }
+}
+
+void imprime(TAG *arvore){
+    if(arvore){
+        imprime_aux(arvore, 0);
+    }
+    printf("\n");
+}
 
 void imprime_no(TAG *arvore, int cod){
     if(!arvore){
@@ -158,7 +179,7 @@ TAG* remove_no(TAG* arvore, int cod, int cod_novo_pai){
 }
 
 //This is destroy. :)
-void libera(TAG* arvore){
+TAG* libera(TAG* arvore){
     if(arvore){
         libera(arvore->irmao);
         libera(arvore->filho);
@@ -166,5 +187,6 @@ void libera(TAG* arvore){
         free(arvore->no);
         free(arvore);
     }
+    return NULL;
 }
 #endif
