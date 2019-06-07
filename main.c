@@ -21,18 +21,14 @@ int main(void){
     size_t str_size = 0;
 
     int cod, cod_pai;
-    char* nome_poli;
+    char* nome_poli, * medidas;
     int *values = (int*)malloc(sizeof(int)*3);
     char * val;
-    printf("COD|COD_PAI|POLIGONO [MEDIDAS] AREA\n");
     while(getline(&line, &str_size, file) != -1){
-        //sscanf(line, "%d/%d/%s %d %d", &cod, &cod_pai, nome_poli, &values[0], &values[1]);
-        //printf("%d %d %s %d %d\n", cod, cod_pai, nome_poli, values[0], values[1]);
-
         int cod = atoi(strtok(line, "/"));
 	    int cod_pai = atoi(strtok(NULL, "/"));
-	    char* nome_poli = strtok(NULL, " ");
-        char* medidas = strtok(NULL, "");
+	    nome_poli = strtok(NULL, " ");
+        medidas = strtok(NULL, "");
 
         for(int i=0; i<3; i++){
             values[i] = 0;
@@ -49,8 +45,75 @@ int main(void){
         enum poligono cod_poli = string_to_enum(nome_poli);
         void * poli = cria(cod_poli, values);
         arvore = insere(arvore, cod, cod_pai, poli, cod_poli);
+        //imprime_no(arvore, cod);
+    }
+    //printf("COD|COD_PAI|POLIGONO [MEDIDAS] AREA\n");
 
-        imprime_no(arvore, cod);
+    //insere no
+    //remove no
+    //destroy Arvore
+    //imprime no
+    //imprime Arvore
+
+    int exit = 0;
+    char* codline;
+    char* decode, action_codline;
+    while(!exit){
+        printf("insert cod_no cod_pai cod_poli x y z\n");
+        printf("remove cod_no novo_pai\n");
+        printf("destroy\n");
+        printf("print_no cod_no\n");
+        printf("print\n");
+        printf("exit\n");
+
+        scanf("%s", codline);
+        codline = strtok(codline, "");
+        int i=0;
+        while(codline!=NULL){
+            codline = strtok(codline, " ");
+            printf("%s", codline);
+
+            if(!strcmp(codline, "insert")){
+                cod = atoi(strtok(NULL, " "));
+                cod_pai = atoi(strtok(NULL, " "));
+                nome_poli = strtok(NULL, " ");
+                medidas = strtok(NULL, "");
+
+                for(int i=0; i<3; i++){
+                    values[i] = 0;
+                }
+
+                int i=0;
+                while(medidas!=NULL){
+                    val = strtok(medidas, " ");
+                    values[i] = atoi(val);
+                    medidas = strtok(NULL, "");
+                    i++;
+                }
+
+                enum poligono cod_poli = string_to_enum(nome_poli);
+                void * poli = cria(cod_poli, values);
+                arvore = insere(arvore, cod, cod_pai, poli, cod_poli);
+
+            }else if(!strcmp(codline, "remove")){
+                exit = 1;
+
+            }else if(!strcmp(codline, "destroy")){
+                libera(arvore);
+
+            }else if(!strcmp(codline, "print_no")){
+                int no = atoi(strtok(NULL, ""));
+                imprime_no(arvore, no);
+
+            }else if(!strcmp(codline, "print")){
+                imprime(arvore);
+
+            }else if(!strcmp(codline, "exit")){
+                exit = 1;
+            }
+
+            //codline = strtok(NULL, "");
+        }
     }
 
     libera(arvore);
