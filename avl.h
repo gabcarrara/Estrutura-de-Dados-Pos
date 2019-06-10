@@ -14,6 +14,10 @@ typedef struct NO{
 }NO;
 
 
+NO *inicializa_avl(){
+    return NULL;
+}
+
 void libera_avl(NO* t){
     if( t != NULL ){
         libera_avl( t->esq );

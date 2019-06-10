@@ -6,6 +6,7 @@
 #include "avl.h"
 
 void help(void){
+    //TO-DO: Imprime AVL
     printf("\n");
     printf("################# COMMAND LIST ###############\n");
     printf("#\tinsert cod_no cod_pai cod_poli x y z #\n");
@@ -13,7 +14,9 @@ void help(void){
     printf("#\tremove cod_no novo_pai               #\n");
     printf("#\tdestroy                              #\n");
     printf("#\tprint_no cod_no                      #\n");
-    printf("#\tprint                                #\n");
+    printf("#\tprint_generic                        #\n");
+    printf("#\tprint_avl                            #\n");
+    printf("#\tprint_b                              #\n");
     printf("#\texit                                 #\n");
     printf("#\thelp                                 #\n");
     printf("##############################################");
@@ -24,9 +27,8 @@ void help(void){
 int main(void){
     FILE  * file = fopen("dataset.txt", "r");
     TAG *arvore = inicializa();
-    //NO *avl = NULL;
-
-
+    NO *avl = inicializa_avl();
+    TAB *b = inicializa_b();
     if(!file){
         printf("Error: arquivo não encontrado!\n");
          exit(EXIT_FAILURE);
@@ -63,7 +65,6 @@ int main(void){
         //avl = insere_avl(cod, avl, busca(arvore, cod));
         //imprime_no(arvore, cod);
     }
-    //printf("COD|COD_PAI|POLIGONO [MEDIDAS] AREA\n");
 
     int exit = 0;
     char codline[30], dados[30];
@@ -124,10 +125,15 @@ int main(void){
             int cod_no = atoi(dados);
             imprime_no(arvore, cod_no);
 
-        }else if(!strcmp(codline, "print")){
+        }else if(!strcmp(codline, "print_generic")){
             imprime(arvore);
+
+        }else if(!strcmp(codline, "print_avl")){
             printf("\nAVL\n");
-            //imprime_avl(avl);
+            imprime_avl(avl);
+
+        }else if(!strcmp(codline, "generic_to_b")){
+            b = generic_to_b(arvore);
 
         }else if(!strcmp(codline, "exit")){
             exit = 1;
