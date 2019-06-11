@@ -219,7 +219,6 @@ NO* generic_to_avl(TAG *generic, NO *avl){
 
 void imprime_poly_avl(NO *avl){
     if(avl){
-      int i;
       imprime_poly_avl(avl->esq);
       imprime_no(avl->elemento, avl->info);
       imprime_poly_avl(avl->dir);

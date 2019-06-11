@@ -294,7 +294,7 @@ TAB* retira_b(TAB* arv, int k, int t){
 
 void imprime_poly_b(TAB * b){
     if(b){
-      int i,j;
+      int i;
       for(i=0; i<=b->nchaves-1; i++){
          imprime_poly_b(b->filho[i]);
          imprime_no(b->generic[i], b->chave[i]);
