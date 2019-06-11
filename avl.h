@@ -13,7 +13,6 @@ typedef struct NO{
     int alt;
 }NO;
 
-
 NO *inicializa_avl(){
     return NULL;
 }
@@ -22,18 +21,8 @@ void libera_avl(NO* t){
     if( t != NULL ){
         libera_avl( t->esq );
         libera_avl( t->dir );
-        free( t );
+        free(t);
     }
-}
-
-AVL* generic_to_avl(TAG  *generic, NO * avl){
-	
-	if(!generic) return NULL;
-	avl = insere_avl(generic->cod, avl, generic);
-	avl = generic_to_avl(generic->irmao, avl);
-	avl = generic_to_avl(generic->filho,avl);
-    
-	return avl;
 }
 
 NO* busca_avl(int e, NO* t ){
@@ -42,7 +31,6 @@ NO* busca_avl(int e, NO* t ){
     if( e > t->info ) return busca_avl( e, t->dir );
     return t;
 }
-
 
 static int calc_alt( NO* n ){
     if( n == NULL ) return -1;
@@ -89,7 +77,7 @@ static NO* rot_dir_esq( NO* k1 ){
 }
 
 
-NO* insere_avl(int e, NO* t, TAG *elemento){
+NO* insere_avl(int e, NO *t, TAG *elemento){
     if( t == NULL ){
         t = (NO*)malloc(sizeof(NO));
         if( t == NULL ){
@@ -101,6 +89,7 @@ NO* insere_avl(int e, NO* t, TAG *elemento){
             t->elemento = elemento;
             t->alt = 0;
             t->esq = t->dir = NULL;
+
         }
     }
     else if(e < t->info){
@@ -123,9 +112,9 @@ NO* insere_avl(int e, NO* t, TAG *elemento){
         }
     }
     t->alt = max( calc_alt( t->esq ), calc_alt( t->dir ) ) + 1;
+    //printf("cod: %d\n", t->info);
     return t;
 }
-
 
 int calc_alt_retira(NO *T){
     int lh,rh;
@@ -138,7 +127,6 @@ int calc_alt_retira(NO *T){
     return(rh);
 }
 
-
 int FB(NO *T){
     int lh,rh;
     if(T==NULL) return(0);
@@ -148,7 +136,6 @@ int FB(NO *T){
     else rh=1+T->dir->alt;
     return(lh-rh);
 }
-
 
 void imprime_aux_avl(NO *a, int andar){
   if(a){
@@ -160,11 +147,9 @@ void imprime_aux_avl(NO *a, int andar){
   }
 }
 
-
 void imprime_avl(NO *a){
   imprime_aux_avl(a, 1);
 }
-
 
 NO * retira_avl(int x, NO *T){
     NO *p;
@@ -218,9 +203,18 @@ NO * retira_avl(int x, NO *T){
     return(T);
 }
 
-
 static int min( int l, int r){
     return l < r ? l: r;
+}
+
+NO* generic_to_avl(TAG *generic, NO *avl){
+	if(generic){
+    	avl = insere_avl(generic->cod, avl, generic);
+    	avl = generic_to_avl(generic->irmao, avl);
+    	avl = generic_to_avl(generic->filho, avl);
+    }
+
+	return avl;
 }
 
 

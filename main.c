@@ -16,7 +16,7 @@ void help(void){
     printf("#\tdestroy                              #\n");
     printf("#\tprint_no cod_no                      #\n");
     printf("#\tprint_generic                        #\n");
-    printf("#\tprint_avl                            #\n");
+    printf("#\tgeneric_to_avl                       #\n");
     printf("#\tgeneric_to_b                         #\n");
     printf("#\texit                                 #\n");
     printf("#\thelp                                 #\n");
@@ -129,9 +129,21 @@ int main(void){
         }else if(!strcmp(codline, "print_generic")){
             imprime(arvore);
 
-        }else if(!strcmp(codline, "print_avl")){
-            printf("\nAVL\n");
-            imprime_avl(avl);
+        }else if(!strcmp(codline, "generic_to_avl")){
+            avl = generic_to_avl(arvore, avl);
+            if(!avl){
+                printf("Arvore vazia!\n");
+            }else{
+                printf("\n################## AVL TREE ################\n");
+                imprime_avl(avl);
+                printf("################################################");
+                printf("\n\n");
+                printf("\n############ AVL TREE - Polygon ############\n");
+                //imprime_poly_b(b);
+                printf("################################################");
+                printf("\n\n");
+                libera_avl(avl);
+            }
 
         }else if(!strcmp(codline, "generic_to_b")){
             b = generic_to_b(arvore, b);
@@ -143,7 +155,7 @@ int main(void){
                 printf("################################################");
                 printf("\n\n");
                 printf("\n############# B TREE - Polygon #############\n");
-                Imprime(b,0);
+                imprime_poly_b(b);
                 printf("################################################");
                 printf("\n\n");
                 b = libera_b(b);

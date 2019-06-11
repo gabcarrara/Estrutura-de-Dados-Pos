@@ -50,6 +50,7 @@ void imprime(TAG *arvore){
 }
 
 void imprime_no(TAG *arvore, int cod){
+    
     if(!arvore){
         printf("Arvore nula!\n");
         return;
@@ -58,7 +59,6 @@ void imprime_no(TAG *arvore, int cod){
         printf("No invalido!\n");
         return;
     }
-
 
     TAG *no = busca(arvore, cod);
     if(!no){
@@ -87,7 +87,7 @@ TAG* insere(TAG* arvore, int cod, int pai, void *poligono, enum poligono nome){
         free(poligono);
         return arvore;
     }
-    
+
     if(busca(arvore, cod)){
         printf("No ja esta na arvore!\n");
         free(poligono);
@@ -159,7 +159,7 @@ TAG* remove_no(TAG* arvore, int cod, int cod_novo_pai){
         printf("No invalido\n");
         return arvore;
     }
-    
+
     if(busca(temp->filho, cod_novo_pai)){
         printf("Novo pai nao pode ser descendente do no removido\n");
         return arvore;

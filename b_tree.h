@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "generic_tree.h"
 
 const int t = 2;
 
@@ -68,6 +69,7 @@ TAB *inicializa_b(){
 
 
 TAB *Divisao(TAB *x, int i, TAB* y, int t){
+
   TAB *z=Cria(t);
   z->nchaves= t - 1;
   z->folha = y->folha;
@@ -90,7 +92,7 @@ TAB *Divisao(TAB *x, int i, TAB* y, int t){
       x->generic[j] = x->generic[j-1];
   }
   x->chave[i-1] = y->chave[t-1];
-  x->generic[i-1] = x->generic[t-1];
+  x->generic[i-1] = y->generic[t-1];
   x->nchaves++;
   return x;
 }
@@ -118,7 +120,6 @@ TAB *Insere_Nao_Completo(TAB *x, int k, int t, TAG *generic){
   x->filho[i] = Insere_Nao_Completo(x->filho[i], k, t, generic);
   return x;
 }
-
 
 TAB *Insere(TAB *T, TAG * generic, int k, int t){
   if(Busca(T,k)) return T;
@@ -291,6 +292,16 @@ TAB* retira_b(TAB* arv, int k, int t){
   return remover(arv, k, t);
 }
 
+void imprime_poly_b(TAB * b){
+    if(b){
+      int i,j;
+      for(i=0; i<=b->nchaves-1; i++){
+         imprime_poly_b(b->filho[i]);
+         imprime_no(b->generic[i], b->chave[i]);
+    }
+    imprime_poly_b(b->filho[i]);
+  }
+ }
 
 TAB* generic_to_b(TAG *arvore, TAB * b){
     if(arvore){
@@ -298,12 +309,6 @@ TAB* generic_to_b(TAG *arvore, TAB * b){
         b = generic_to_b(arvore->irmao, b);
         b = generic_to_b(arvore->filho, b);
     }
-return b;
-}
 
-/*void imprime_poly_b(TAB * b){
-    if(b){
-        generic_to_b(arvore->irmao, b);
-        b = generic_to_b(arvore->filho, b);
-    }
-}*/
+    return b;
+}
