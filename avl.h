@@ -157,13 +157,13 @@ void imprime_avl(NO *a){
 }
 
 
-NO * retira(int x, NO *T){
+NO * retira_avl(int x, NO *T){
     NO *p;
     if(T==NULL)
         return NULL;
     else
         if(x > T->info){
-            T->dir=retira(x,T->dir);
+            T->dir=retira_avl(x,T->dir);
             if(FB(T)==2){
                 if(FB(T->esq)>=0){
                     T=rot_dir(T);
@@ -174,7 +174,7 @@ NO * retira(int x, NO *T){
         }
         else
             if(x<T->info){
-                    T->esq=retira(x,T->esq);
+                    T->esq=retira_avl(x,T->esq);
                     if(FB(T)==-2){//Rebalance during windup
                         if(FB(T->dir)<=0){
                             T=rot_esq(T);
@@ -189,7 +189,7 @@ NO * retira(int x, NO *T){
                       p=T->esq;
                       while(p->dir != NULL) p=p->dir;
                       T->info=p->info;
-                      T->esq=retira(p->info, T->esq);
+                      T->esq=retira_avl(p->info, T->esq);
                       if(FB(T)== -2){//Rebalance during windup
                         if(FB(T->dir)<=0){
                             T=rot_esq(T);

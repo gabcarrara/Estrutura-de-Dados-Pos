@@ -4,6 +4,7 @@
 #include "poligono.h"
 #include "generic_tree.h"
 #include "avl.h"
+#include "b_tree.h"
 
 void help(void){
     //TO-DO: Imprime AVL
@@ -16,7 +17,7 @@ void help(void){
     printf("#\tprint_no cod_no                      #\n");
     printf("#\tprint_generic                        #\n");
     printf("#\tprint_avl                            #\n");
-    printf("#\tprint_b                              #\n");
+    printf("#\tgeneric_to_b                         #\n");
     printf("#\texit                                 #\n");
     printf("#\thelp                                 #\n");
     printf("##############################################");
@@ -133,7 +134,20 @@ int main(void){
             imprime_avl(avl);
 
         }else if(!strcmp(codline, "generic_to_b")){
-            b = generic_to_b(arvore);
+            b = generic_to_b(arvore, b);
+            if(!b){
+                printf("Arvore vazia!\n");
+            }else{
+                printf("\n################### B TREE #################\n");
+                Imprime(b,0);
+                printf("################################################");
+                printf("\n\n");
+                printf("\n############# B TREE - Polygon #############\n");
+                Imprime(b,0);
+                printf("################################################");
+                printf("\n\n");
+                b = libera_b(b);
+            }
 
         }else if(!strcmp(codline, "exit")){
             exit = 1;

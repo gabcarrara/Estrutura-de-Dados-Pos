@@ -5,6 +5,7 @@ const int t = 2;
 
 typedef struct ArvB{
   int nchaves, folha, *chave;
+  TAG **generic;
   struct ArvB **filho;
 }TAB;
 
@@ -15,23 +16,25 @@ TAB *Cria(int t){
   novo->chave =(int*)malloc(sizeof(int*)*((t*2)-1));
   novo->folha=1;
   novo->filho = (TAB**)malloc(sizeof(TAB*)*t*2);
+  novo->generic = (TAG**)malloc(sizeof(TAG*)*((t*2)-1));
   int i;
   for(i=0; i<(t*2); i++) novo->filho[i] = NULL;
   return novo;
 }
 
 
-TAB *Libera(TAB *a){
+TAB *libera_b(TAB *a){
   if(a){
     if(!a->folha){
       int i;
-      for(i = 0; i <= a->nchaves; i++) Libera(a->filho[i]);
+      for(i = 0; i <= a->nchaves; i++) libera_b(a->filho[i]);
     }
     free(a->chave);
     free(a->filho);
     free(a);
     return NULL;
-  }
+    }
+return NULL;
 }
 
 
@@ -69,7 +72,10 @@ TAB *Divisao(TAB *x, int i, TAB* y, int t){
   z->nchaves= t - 1;
   z->folha = y->folha;
   int j;
-  for(j=0;j<t-1;j++) z->chave[j] = y->chave[j+t];
+  for(j=0;j<t-1;j++) {
+      z->chave[j] = y->chave[j+t];
+      z->generic[j] = y->generic[j+t];
+  }
   if(!y->folha){
     for(j=0;j<t;j++){
       z->filho[j] = y->filho[j+t];
@@ -79,21 +85,27 @@ TAB *Divisao(TAB *x, int i, TAB* y, int t){
   y->nchaves = t-1;
   for(j=x->nchaves; j>=i; j--) x->filho[j+1]=x->filho[j];
   x->filho[i] = z;
-  for(j=x->nchaves; j>=i; j--) x->chave[j] = x->chave[j-1];
+  for(j=x->nchaves; j>=i; j--) {
+      x->chave[j] = x->chave[j-1];
+      x->generic[j] = x->generic[j-1];
+  }
   x->chave[i-1] = y->chave[t-1];
+  x->generic[i-1] = x->generic[t-1];
   x->nchaves++;
   return x;
 }
 
 
-TAB *Insere_Nao_Completo(TAB *x, int k, int t){
+TAB *Insere_Nao_Completo(TAB *x, int k, int t, TAG *generic){
   int i = x->nchaves-1;
   if(x->folha){
     while((i>=0) && (k<x->chave[i])){
       x->chave[i+1] = x->chave[i];
+      x->generic[i+1] = x->generic[i];
       i--;
     }
     x->chave[i+1] = k;
+    x->generic[i+1] = generic;
     x->nchaves++;
     return x;
   }
@@ -103,16 +115,17 @@ TAB *Insere_Nao_Completo(TAB *x, int k, int t){
     x = Divisao(x, (i+1), x->filho[i], t);
     if(k>x->chave[i]) i++;
   }
-  x->filho[i] = Insere_Nao_Completo(x->filho[i], k, t);
+  x->filho[i] = Insere_Nao_Completo(x->filho[i], k, t, generic);
   return x;
 }
 
 
-TAB *Insere(TAB *T, int k, int t){
+TAB *Insere(TAB *T, TAG * generic, int k, int t){
   if(Busca(T,k)) return T;
   if(!T){
     T=Cria(t);
     T->chave[0] = k;
+    T->generic[0] = generic;
     T->nchaves=1;
     return T;
   }
@@ -122,10 +135,10 @@ TAB *Insere(TAB *T, int k, int t){
     S->folha = 0;
     S->filho[0] = T;
     S = Divisao(S,1,T,t);
-    S = Insere_Nao_Completo(S,k,t);
+    S = Insere_Nao_Completo(S,k,t, generic);
     return S;
   }
-  T = Insere_Nao_Completo(T,k,t);
+  T = Insere_Nao_Completo(T,k,t, generic);
   return T;
 }
 
@@ -273,49 +286,24 @@ TAB* remover(TAB* arv, int ch, int t){
 }
 
 
-TAB* retira(TAB* arv, int k, int t){
+TAB* retira_b(TAB* arv, int k, int t){
   if(!arv || !Busca(arv, k)) return arv;
   return remover(arv, k, t);
 }
 
 
-TAB* generic_to_b(TAB * b, TAG *arvore){
+TAB* generic_to_b(TAG *arvore, TAB * b){
     if(arvore){
-        printf("%d<-%d",arvore->pai, arvore->cod);
-
-        if(arvore->irmao){
-            printf("\t");
-            generic_to_b(arvore->irmao, nivel+1);
-        }
-
-        if(arvore->filho){
-            printf("\n");
-            for(int i=0 ; i< nivel; i++) printf("\t");
-            generic_to_b(arvore->filho, nivel);
-        }
+        b = Insere(b, arvore, arvore->cod, t);
+        b = generic_to_b(arvore->irmao, b);
+        b = generic_to_b(arvore->filho, b);
     }
-
-  /*TAB * arvore = inicializa_b();
-  int num = 0, from, to;
-  while(num != -1){
-    printf("Digite um numero para adicionar. 0 para imprimir. -9 para remover e -1 para sair\n");
-    scanf("%i", &num);
-    if(num == -9){
-      scanf("%d", &from);
-      arvore = retira(arvore, from, t);
-      Imprime(arvore,0);
-    }
-    else if(num == -1){
-      printf("\n");
-      Imprime(arvore,0);
-      Libera(arvore);
-      return 0;
-    }
-    else if(!num){
-      printf("\n");
-      Imprime(arvore,0);
-    }
-    else arvore = Insere(arvore, num, t);
-    printf("\n\n");
-}*/
+return b;
 }
+
+/*void imprime_poly_b(TAB * b){
+    if(b){
+        generic_to_b(arvore->irmao, b);
+        b = generic_to_b(arvore->filho, b);
+    }
+}*/
