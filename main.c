@@ -139,7 +139,7 @@ int main(void){
                 printf("################################################");
                 printf("\n\n");
                 printf("\n############ AVL TREE - Polygon ############\n");
-                //imprime_poly_b(b);
+                imprime_poly_avl(avl);
                 printf("################################################");
                 printf("\n\n");
                 libera_avl(avl);
