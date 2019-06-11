@@ -65,17 +65,24 @@ void imprime_no(TAG *arvore, int cod){
         printf("Nó não encontrado!\n");
         return;
     }
-    printf("%d|", no->cod);
-    printf("%d|", no->pai);
+    printf("%d | ", no->cod);
+    printf("%d | ", no->pai);
     imprime_poligono(no->no->dados, no->no->tipo);
-    printf(" %f", no->no->area);
+    printf(" | %.2f", no->no->area);
     printf("\n");
 }
 
 
 //Recebe struct do poligono e usar poligono_id para calcular a area correta.
 TAG* insere(TAG* arvore, int cod, int pai, void *poligono, enum poligono nome){
-    if(pai == 0 && arvore){
+    
+	if(pai!=0 && !arvore){
+		printf("Arvore vazia, insira uma nova raiz\n");
+		free(poligono);
+        return arvore;
+	}
+	
+	if(pai == 0 && arvore){
         printf("Não é possível inserir uma nova raiz!\n");
         free(poligono);
         return arvore;

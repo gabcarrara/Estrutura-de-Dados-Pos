@@ -9,14 +9,14 @@
 void help(void){
     //TO-DO: Imprime AVL
     printf("\n");
-    printf("################# COMMAND LIST ###############\n");
+    printf("################ COMMAND LIST ##############\n");
     printf("#\tinsert cod_no cod_pai cod_poli x y z #\n");
     printf("#\tupdate_polygon cod_no cod_poli x y z #\n");
     printf("#\tremove cod_no novo_pai               #\n");
     printf("#\tdestroy                              #\n");
     printf("#\tprint_no cod_no                      #\n");
     printf("#\tprint_generic                        #\n");
-    printf("#\tgeneric_to_avl                       #\n");
+    printf("#\tgeneric_to_balanced                  #\n");
     printf("#\tgeneric_to_b                         #\n");
     printf("#\texit                                 #\n");
     printf("#\thelp                                 #\n");
@@ -25,8 +25,17 @@ void help(void){
 }
 
 //TO-DO: Modificar a entrada de arquivo, passando pelo terminal.
-int main(void){
-    FILE  * file = fopen("dataset.txt", "r");
+int main(int argc, char **argv){
+    
+	//printf("%s", argv[1]);
+	char *file_name = argv[1];
+	
+	if(!file_name){
+		printf("Sem parametro de entrada para nome de arquivo\n");
+		exit(EXIT_FAILURE);
+	}
+	
+	FILE  * file = fopen(file_name, "r");
     TAG *arvore = inicializa();
     NO *avl = inicializa_avl();
     TAB *b = inicializa_b();
@@ -129,18 +138,19 @@ int main(void){
         }else if(!strcmp(codline, "print_generic")){
             imprime(arvore);
 
-        }else if(!strcmp(codline, "generic_to_avl")){
+        }else if(!strcmp(codline, "generic_to_balanced")){
             avl = generic_to_avl(arvore, avl);
             if(!avl){
                 printf("Arvore vazia!\n");
             }else{
-                printf("\n################## AVL TREE ################\n");
+                printf("\n############## BALANCED TREE ##############\n");
                 imprime_avl(avl);
-                printf("################################################");
+                printf("##############################################");
                 printf("\n\n");
-                printf("\n############ AVL TREE - Polygon ############\n");
+                printf("\n########## BALANCED TREE - Polygon ##########\n");
+				printf("COD | COD_PAI | POLIGONO | AREA\n");
                 imprime_poly_avl(avl);
-                printf("################################################");
+                printf("##############################################");
                 printf("\n\n");
                 libera_avl(avl);
             }
@@ -152,11 +162,12 @@ int main(void){
             }else{
                 printf("\n################### B TREE #################\n");
                 Imprime(b,0);
-                printf("################################################");
+                printf("##############################################");
                 printf("\n\n");
-                printf("\n############# B TREE - Polygon #############\n");
+                printf("\n############### B TREE - Polygon #############\n");
+				printf("COD | COD_PAI | POLIGONO | AREA\n");
                 imprime_poly_b(b);
-                printf("################################################");
+                printf("##############################################");
                 printf("\n\n");
                 b = libera_b(b);
             }
@@ -166,8 +177,12 @@ int main(void){
         }else if(!strcmp(codline, "help")){
             help();
         }else{
-            printf("Comando nao encontrado!");
+            printf("Comando nao encontrado!\n");
         }
+		
+		int c;
+		while ((c = getchar()) != '\n' && c != EOF) { }
+		
     }
 
     arvore = libera(arvore);

@@ -108,19 +108,19 @@ float calcula_area(void* poligono, enum_poli nome){
 void imprime_poligono(void* poligono, enum_poli nome){
     if(nome==CIR){
         TCIR* cir = poligono;
-        printf("CIR [ %f ]", cir->raio);
+        printf("CIR [ %.1f ]", cir->raio);
     }else if(nome==QUA){
         TQUA* qua = poligono;
-        printf("QUA [ %f ]", qua->lado);
+        printf("QUA [ %.1f ]", qua->lado);
     }else if(nome==RET){
         TRET* ret = poligono;
-        printf("RET [ %f %f ]", ret->base, ret->altura);
+        printf("RET [ %.1f %.1f]", ret->base, ret->altura);
     }else if(nome==TRI){
         TTRI* tri = poligono;
-        printf("TRI [ %f %f ]", tri->base, tri->altura);
+        printf("TRI [ %.1f %.1f ]", tri->base, tri->altura);
     }else if(nome==TRA){
         TTRA* tra = poligono;
-        printf("TRA [ %f %f %f ]", tra->base_menor, tra->base_maior, tra->altura);
+        printf("TRA [ %.1f %.1f %.1f ]", tra->base_menor, tra->base_maior, tra->altura);
     }
 }
 
