@@ -26,6 +26,15 @@ void libera_avl(NO* t){
     }
 }
 
+AVL* generic_to_avl(TAG  *generic, NO * avl){
+	
+	if(!generic) return NULL;
+	avl = insere_avl(generic->cod, avl, generic);
+	avl = generic_to_avl(generic->irmao, avl);
+	avl = generic_to_avl(generic->filho,avl);
+    
+	return avl;
+}
 
 NO* busca_avl(int e, NO* t ){
     if( t == NULL ) return NULL;

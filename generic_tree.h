@@ -17,7 +17,7 @@ typedef struct info{
     float area;
 }TI;
 
-//Busco um no da arvore pelo seu codigo unico
+//Busca um no da arvore pelo seu codigo unico
 TAG* busca(TAG* arvore, int cod){
     if(!arvore || arvore->cod == cod) return arvore;
     TAG *irmao = busca(arvore->irmao, cod);
