@@ -47,7 +47,7 @@ void imprime(TAG *arvore){
         imprime_aux(arvore, 0);
         printf("\n##########################################\n\n");
     }else{
-        printf("Arvore vazia!");
+        printf("Arvore vazia!\n");
     }
 }
 

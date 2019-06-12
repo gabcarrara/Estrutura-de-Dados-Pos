@@ -61,17 +61,25 @@ int main(int argc, char **argv){
             values[i] = 0;
         }
 
-        int i=0;
+        int i=0, controle=1;
         while(medidas!=NULL){
             val = strtok(medidas, " ");
             values[i] = atoi(val);
+            if(values[i]<0) controle=0;
             medidas = strtok(NULL, "");
             i++;
         }
-
-        enum poligono cod_poli = string_to_enum(nome_poli);
-        void * poli = cria(cod_poli, values);
-        arvore = insere(arvore, cod, cod_pai, poli, cod_poli);
+        if(controle){
+            enum poligono cod_poli = string_to_enum(nome_poli);
+            if(!cod_poli) {
+                printf("Cod_poly inválido!\n");
+            }else{
+                void * poli = cria(cod_poli, values);
+                arvore = insere(arvore, cod, cod_pai, poli, cod_poli);
+            }
+        }else{
+            printf("Medida inválida!\n");
+        }
     }
 
     int exit = 0;
@@ -125,7 +133,7 @@ int main(int argc, char **argv){
                 medidas = strtok(NULL, "");
                 i++;
             }
-            
+
             if(controle){
                 enum poligono cod_poli = string_to_enum(nome_poli);
                 if(!cod_poli) {
