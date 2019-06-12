@@ -52,7 +52,7 @@ float string_to_enum(char* nome){
     }else if(!strcmp(nome, "TRA")){
         return TRA;
     }
-    return -1;
+    return 0;
 }
 
 void* cria(enum_poli nome, int* values){

@@ -9,32 +9,32 @@
 void help(void){
     //TO-DO: Imprime AVL
     printf("\n");
-    printf("################ COMMAND LIST ##############\n");
-    printf("#\tinsert cod_no cod_pai cod_poli x y z #\n");
-    printf("#\tupdate_polygon cod_no cod_poli x y z #\n");
-    printf("#\tremove cod_no novo_pai               #\n");
-    printf("#\tdestroy                              #\n");
-    printf("#\tprint_no cod_no                      #\n");
-    printf("#\tprint_generic                        #\n");
-    printf("#\tgeneric_to_balanced                  #\n");
-    printf("#\tgeneric_to_b                         #\n");
-    printf("#\texit                                 #\n");
-    printf("#\thelp                                 #\n");
-    printf("##############################################");
+    printf("################## COMMAND LIST #################\n");
+    printf("#\tinsert cod_no cod_pai cod_poly x y z \t#\n");
+    printf("#\tupdate_polygon cod_no cod_poly x y z \t#\n");
+    printf("#\tremove cod_no novo_pai               \t#\n");
+    printf("#\tdestroy                              \t#\n");
+    printf("#\tprint_no cod_no                      \t#\n");
+    printf("#\tprint_generic                        \t#\n");
+    printf("#\tgeneric_to_balanced                  \t#\n");
+    printf("#\tgeneric_to_b                         \t#\n");
+    printf("#\texit                                 \t#\n");
+    printf("#\thelp                                 \t#\n");
+    printf("#################################################");
     printf("\n\n");
 }
 
 //TO-DO: Modificar a entrada de arquivo, passando pelo terminal.
 int main(int argc, char **argv){
-    
+
 	//printf("%s", argv[1]);
 	char *file_name = argv[1];
-	
+
 	if(!file_name){
 		printf("Sem parametro de entrada para nome de arquivo\n");
 		exit(EXIT_FAILURE);
 	}
-	
+
 	FILE  * file = fopen(file_name, "r");
     TAG *arvore = inicializa();
     NO *avl = inicializa_avl();
@@ -72,8 +72,6 @@ int main(int argc, char **argv){
         enum poligono cod_poli = string_to_enum(nome_poli);
         void * poli = cria(cod_poli, values);
         arvore = insere(arvore, cod, cod_pai, poli, cod_poli);
-        //avl = insere_avl(cod, avl, busca(arvore, cod));
-        //imprime_no(arvore, cod);
     }
 
     int exit = 0;
@@ -92,17 +90,25 @@ int main(int argc, char **argv){
             scanf("%[^\n\r]", dados);
 
             medidas = strtok(dados, "");
-            int i=0;
+            int i=0, controle=1;
             while(medidas!=NULL){
                 val = strtok(medidas, " ");
                 values[i] = atoi(val);
+                if(values[i]<0) controle=0;
                 medidas = strtok(NULL, "");
                 i++;
             }
-
-            enum poligono cod_poli = string_to_enum(nome_poli);
-            void * poli = cria(cod_poli, values);
-            arvore = insere(arvore, cod, cod_pai, poli, cod_poli);
+            if(controle){
+                enum poligono cod_poli = string_to_enum(nome_poli);
+                if(!cod_poli) {
+                    printf("Cod_poly inválido!\n");
+                }else{
+                    void * poli = cria(cod_poli, values);
+                    arvore = insere(arvore, cod, cod_pai, poli, cod_poli);
+                }
+            }else{
+                printf("Medida inválida!\n");
+            }
 
         }else if(!strcmp(codline, "update_polygon")){
             //update_polygon 1 CIR 10
@@ -111,16 +117,25 @@ int main(int argc, char **argv){
             scanf("%[^\n\r]", dados);
 
             medidas = strtok(dados, "");
-            int i=0;
+            int i=0, controle=1;
             while(medidas!=NULL){
                 val = strtok(medidas, " ");
                 values[i] = atoi(val);
+                if(values[i]<0) controle=0;
                 medidas = strtok(NULL, "");
                 i++;
             }
-
-            enum poligono cod_poli = string_to_enum(nome_poli);
-            atualiza_poligono(arvore, cod_poli, values);
+            
+            if(controle){
+                enum poligono cod_poli = string_to_enum(nome_poli);
+                if(!cod_poli) {
+                    printf("Cod_poly inválido!\n");
+                }else{
+                    atualiza_poligono(arvore, cod, cod_poli, values);
+                }
+            }else{
+                printf("Medida inválida!\n");
+            }
 
         }else if(!strcmp(codline, "remove")){
             scanf("%d", &cod);
@@ -179,10 +194,10 @@ int main(int argc, char **argv){
         }else{
             printf("Comando nao encontrado!\n");
         }
-		
+
 		int c;
-		while ((c = getchar()) != '\n' && c != EOF) { }
-		
+		while ((c = getchar()) != '\n' && c != EOF);
+
     }
 
     arvore = libera(arvore);

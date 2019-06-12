@@ -46,13 +46,15 @@ void imprime(TAG *arvore){
         printf("\n############## GENERIC TREE ##############\n");
         imprime_aux(arvore, 0);
         printf("\n##########################################\n\n");
+    }else{
+        printf("Arvore vazia!");
     }
 }
 
 void imprime_no(TAG *arvore, int cod){
-    
+
     if(!arvore){
-        printf("Arvore nula!\n");
+        printf("Arvore vazia!\n");
         return;
     }
     if(cod==-1){
@@ -75,13 +77,12 @@ void imprime_no(TAG *arvore, int cod){
 
 //Recebe struct do poligono e usar poligono_id para calcular a area correta.
 TAG* insere(TAG* arvore, int cod, int pai, void *poligono, enum poligono nome){
-    
 	if(pai!=0 && !arvore){
 		printf("Arvore vazia, insira uma nova raiz\n");
 		free(poligono);
         return arvore;
 	}
-	
+
 	if(pai == 0 && arvore){
         printf("Não é possível inserir uma nova raiz!\n");
         free(poligono);
@@ -151,19 +152,19 @@ void realoca_filhos(TAG *pai_antigo, TAG *pai_novo){
 TAG* remove_no(TAG* arvore, int cod, int cod_novo_pai){
     //Verifica se a arvore existe
     if(!arvore){
-        printf("Arvore invalida\n");
+        printf("Arvore vazia\n");
         return arvore;
     }
     //Verifica se o novo pai existe
     TAG *novo_pai_temp = busca(arvore, cod_novo_pai);
-    if(!novo_pai_temp){
+    if(!novo_pai_temp || cod_novo_pai == cod){
         printf("Novo pai invalido\n");
         return arvore;
     }
     //verifica se o no a ser removido existe
     TAG *temp = busca(arvore, cod);
     if(!temp || temp->pai==0){
-        printf("No invalido\n");
+        printf("No invalido!\n");
         return arvore;
     }
 
@@ -214,19 +215,21 @@ TAG* libera(TAG* arvore){
     return NULL;
 }
 
-//TO-DO: Atualizar pai.
-
-void atualiza_poligono(TAG *arvore, int cod, int* values){
+void atualiza_poligono(TAG *arvore, int cod, int cod_poli, int* values){
     TAG * no = busca(arvore, cod);
     if(!no){
         printf("No nao existe!\n");
         return;
     }
-    free(no->no);
-
-    no->no->dados = cria(cod, values);
-    no->no->tipo = cod;
-    no->no->area = calcula_area(no->no->dados, no->no->tipo);
+    void *d = cria(cod_poli, values);
+    float area = calcula_area(d, cod_poli);
+    if(!d || area<0){
+        printf("Atualizacao invalida!");
+    }
+    free(no->no->dados);
+    no->no->dados = d;
+    no->no->tipo = cod_poli;
+    no->no->area = area;
 }
 
 
